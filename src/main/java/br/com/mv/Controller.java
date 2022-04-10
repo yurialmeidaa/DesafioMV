@@ -40,7 +40,7 @@ public class Controller {
 	@ResponseBody//descrição da resposta
 	public ResponseEntity<Prato> salvar(@RequestBody Prato prato){//recebe os dados para salvar
 		
-	Prato prat = pr.salvarPratos();
+	Prato prat = pr.save(prato);;
 	
 	return new ResponseEntity<Prato>(prat, HttpStatus.CREATED);
 		

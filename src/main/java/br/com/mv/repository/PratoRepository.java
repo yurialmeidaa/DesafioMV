@@ -18,9 +18,8 @@ public interface PratoRepository extends JpaRepository <Prato, Long> {
 	@Query(value = "SELECT * FROM prato", nativeQuery = true)
 	public List<Prato> listaPratos();
 	
-	@Modifying
-	@Query(value = "insert into prato (id, nome, cpf) values (:id, :nome, :cpf)", nativeQuery = true)
-	public Prato salvarPratos();
+	
+	
 	
 	
 	
