@@ -26,7 +26,7 @@ public class Controller {
 	@Autowired//injeção de depedencias
 	private PratoRepository pr;
 
-	@GetMapping(value = "listatodos")
+	@GetMapping(value = "listaTodos")
 	@ResponseBody() //RETONAR OS DADOS PARA O CORPO DA RESPOSTAS 
 	public ResponseEntity<List<Prato>> listaPratos(){
 		
@@ -40,7 +40,7 @@ public class Controller {
 	@ResponseBody//descrição da resposta
 	public ResponseEntity<Prato> salvar(@RequestBody Prato prato){//recebe os dados para salvar
 		
-	Prato prat = pr.save(prato);;
+	Prato prat = pr.save(prato);
 	
 	return new ResponseEntity<Prato>(prat, HttpStatus.CREATED);
 		
