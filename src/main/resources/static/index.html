@@ -41,6 +41,24 @@
   <label for="cpf" class="form-label">CPF colaborador</label>
   <input type="text" class="form-control" id="cpf" placeholder="">
 </div>
+<div class="mb-3">
+  <label for="refeicao" class="form-label">Refeição</label>
+  
+  <select class="form-select" aria-label="Default select example" id="refeicao">
+  <option selected>Selecione uma refeiçao</option>
+  <option value="BOLO">Bolo</option>
+  <option value="SUCO">Suco</option>
+  <option value="PAO">Pão</option>
+  <option value="PAO_DE_QUEIJO">Pão de queijo</option>
+  <option value="TORRADA">Torrada</option>
+  <option value="FRIOS">Frios</option>
+  <option value="CAFE">Café</option>
+  <option value="LEITE">Leite</option>
+
+</select>
+  
+  
+</div>
     </form>
     <button type="button" class="btn btn-success" onclick="salvarUsuario()">Salvar</button>
     <button type="button" class="btn btn-primary" onclick="document.getElementById('formCadastro').reset()">Novo</button>
@@ -53,48 +71,12 @@
 <th>Id</th>
 <th>Nome</th>
 <th>CPF</th>
+<th>Refeição</th>
 </tr>
 </table>
     
-    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Lista</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Informe o nome:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          
-  
-          
-	<table class="table" id="tabelaPratos">
-		<thead>
-			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Nome</th>
-				<th scope="col">CPF</th>
-				<th scope="col">EDITAR</th>
-			</tr>
-		</thead>
-		<tbody>
-			
-		</tbody>
-	</table>
-          
-        </form>
-      </div>
-      <div class="modal-footer">
-       
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
-    </div>
-  </div>
-</div>
+    
+   
     
     
     
@@ -110,6 +92,7 @@
 				tr.push('<td>' + json[i].id + '</td>');
 				tr.push('<td>' + json[i].nome + '</td>');
 				tr.push('<td>' + json[i].cpf + '</td>');
+				tr.push('<td>' + json[i].refeicao + '</td>');
 				tr.push('<td><button class="btn btn-warning" onclick="colocarEditar('+json[i].id+')">Editar</button>&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteUser('+json[i].id+')">Deletar</button></td>');
 				tr.push('</tr>');
 				}
@@ -132,11 +115,12 @@
     	var id = $("#id").val();
     	var nome = $("#nome").val();
     	var cpf =$("#cpf").val();
+    	var refeicao =$("#refeicao").val();
     	
     	$.ajax({
     		  type: "POST",
     		  url: "salvar",
-    		  data: JSON.stringify({id : id, nome : nome, cpf : cpf}),
+    		  data: JSON.stringify({id : id, nome : nome, cpf : cpf, refeicao : refeicao}),
     		  contentType: "application/json; charset=utf-8",
     		  success: function (response){
     			  
@@ -146,7 +130,7 @@
     			  
     		  }
     		  }).fail(function(xhr, status, errorThrown){
-    			  alert("Erro ao salvar: " + xhr.responseText);
+    			  alert("CPF já cadastrado: " + xhr.responseText);
     				  
     		});
     	
@@ -162,7 +146,7 @@
   			$("#id").val(response.id);
   	    	$("#nome").val(response.nome);
   	    	$("#cpf").val(response.cpf);
-  			  
+  	    	$("#refeicao").val(response.refeicao);
   			  
   	    	
   			 

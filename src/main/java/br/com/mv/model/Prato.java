@@ -2,17 +2,13 @@ package br.com.mv.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
 
 @Entity
 public class Prato implements Serializable {
@@ -28,7 +24,20 @@ public class Prato implements Serializable {
 	
 	private String nome;
 	
+	@Column(unique=true)
 	private String cpf;
+
+	@Enumerated(EnumType.STRING)
+	private Refeicao refeicao;
+	
+	
+	public Refeicao getRefeicao() {
+		return refeicao;
+	}
+
+	public void setRefeicao(Refeicao refeicao) {
+		this.refeicao = refeicao;
+	}
 
 	public Long getId() {
 		return id;
