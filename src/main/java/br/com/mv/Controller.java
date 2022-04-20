@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,19 +69,19 @@ public class Controller {
 	
 	@DeleteMapping(value = "delete")//mapeia a url
 	@ResponseBody//descrição da resposta
-	public ResponseEntity<String> delete(@RequestParam Long id){//recebe id para deletar
+	public ResponseEntity<String> delete(@RequestParam (name = "iduser") Long iduser){//recebe id para deletar
 		
-	 pr.deleteById(id);
+	 pr.deleteById(iduser);
 	
 	return new ResponseEntity<String>("Prato deletado com sucesso!", HttpStatus.OK);
 		
 	}
 	
-	@GetMapping(value = "buscarpratoid")//mapeia a url
+	@GetMapping(value = "buscarId")//mapeia a url
 	@ResponseBody//descrição da resposta
-	public ResponseEntity<Prato> buscarpratoid(@RequestParam(name = "id") Long id){//recebe id para consultar
+	public ResponseEntity<Prato> buscarpratoid(@RequestParam(name = "iduser") Long iduser){//recebe id para consultar
 		
-	Prato prato = pr.findById(id).get();
+	Prato prato = pr.findById(iduser).get();
 	
 	return new ResponseEntity<Prato>(prato, HttpStatus.OK);
 		

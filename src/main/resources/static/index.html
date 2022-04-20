@@ -42,11 +42,19 @@
   <input type="text" class="form-control" id="cpf" placeholder="">
 </div>
     </form>
-    <button type="button" class="btn btn-warning" onclick="salvarUsuario()">Salvar</button>
-    <button type="button" class="btn btn-success" onclick="document.getElementById('formCadastro').reset()">Novo</button>
-    <button type="button" class="btn btn-danger" onclick="window.open('lista.html');">Lista</button>
-    
-    
+    <button type="button" class="btn btn-success" onclick="salvarUsuario()">Salvar</button>
+    <button type="button" class="btn btn-primary" onclick="document.getElementById('formCadastro').reset()">Novo</button>
+
+    <br>
+    <br>
+            
+          <table border="1" cellspacing="0" cellpadding="5">
+<tr>
+<th>Id</th>
+<th>Nome</th>
+<th>CPF</th>
+</tr>
+</table>
     
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -62,6 +70,7 @@
             <input type="text" class="form-control" id="recipient-name">
           </div>
           
+  
           
 	<table class="table" id="tabelaPratos">
 		<thead>
@@ -91,6 +100,29 @@
     
     <script type="text/javascript">
     
+    $(document).ready(function() {
+
+    	 
+		$.getJSON('listaTodos', function(json) {
+			  var tr=[];
+				for (var i = 0; i < json.length; i++) {
+				tr.push('<tr id="'+json[i].id+'">');
+				tr.push('<td>' + json[i].id + '</td>');
+				tr.push('<td>' + json[i].nome + '</td>');
+				tr.push('<td>' + json[i].cpf + '</td>');
+				tr.push('<td><button class="btn btn-warning" onclick="colocarEditar('+json[i].id+')">Editar</button>&nbsp;&nbsp;<button class="btn btn-danger" onclick="deleteUser('+json[i].id+')">Deletar</button></td>');
+				tr.push('</tr>');
+				}
+				$('table').append($(tr.join('')));
+		});
+		
+		
+	
+		
+		
+		
+		
+		});
     
     
     
@@ -110,6 +142,8 @@
     			  
     			  $("#id").val(response.id);
     			  alert("Salvo com sucesso!");
+    			  document.location.reload(true);
+    			  
     		  }
     		  }).fail(function(xhr, status, errorThrown){
     			  alert("Erro ao salvar: " + xhr.responseText);
@@ -117,6 +151,48 @@
     		});
     	
     }
+    
+    function colocarEditar(id){
+    	$.ajax({
+  		  type: "GET",
+  		  url: "buscarId",
+  		  data: "iduser=" + id,
+  		  success: function(response){
+  			  
+  			$("#id").val(response.id);
+  	    	$("#nome").val(response.nome);
+  	    	$("#cpf").val(response.cpf);
+  			  
+  			  
+  	    	
+  			 
+  		  }
+  		  }).fail(function(xhr, status, errorThrown){
+  			  alert("Erro ao editar: " + xhr.responseText);
+  				  
+  		});
+    }
+    	
+    	function deleteUser(id){
+    		$.ajax({
+    	  		  type: "DELETE",
+    	  		  url: "delete",
+    	  		  data: "iduser=" + id ,
+    	  		  success: function(response){
+    	  			  $('#' + id).remove();
+    	  			  
+    	  			alert(response);
+    	  			  
+    	  	    	
+    	  			 
+    	  		  }
+    	  		  }).fail(function(xhr, status, errorThrown){
+    	  			  alert("Erro ao deletar usuario por id: " + xhr.responseText);
+    	  				  
+    	  		});
+    	}
+    
+    
     
     </script>
   </body>
